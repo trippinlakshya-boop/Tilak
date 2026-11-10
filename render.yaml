@@ -1,0 +1,28 @@
+services:
+  - type: worker
+    name: scam-report-bot
+    runtime: python
+    region: singapore
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python scam_report_bot.py
+    maxShutdownDelaySeconds: 60
+    disk:
+      name: scam-report-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: CHANNEL_USERNAME
+        value: worksafer
+      - key: PRIME_ADMIN_IDS
+        sync: false
+      - key: DB_PATH
+        value: /var/data/scam_bot.db
+      - key: TG_API_ID
+        value: "0"
+      - key: TG_API_HASH
+        value: ""
+      - key: TG_SESSION
+        value: ""
